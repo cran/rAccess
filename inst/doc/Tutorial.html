@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Tutorial</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Tutorial</h1>
+
+
+
+<div class="sourceCode" id="section-cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb1-1"><a href="#section-cb1-1" tabindex="-1"></a><span class="fu">library</span>(rAccess)</span></code></pre></div>
+<div id="section-raccess-terminology" class="section level2">
+<h2>rAccess terminology</h2>
+<div id="section-access-unit" class="section level4">
+<h4>1. Access Unit</h4>
+<p>The smallest unit that you want to control access to. It could be a
+specific module in the app, a single UI element, a collection of UI
+elements, etc.</p>
+</div>
+<div id="section-access-panel" class="section level4">
+<h4>2. Access Panel</h4>
+<p>A container for a collection of Access Units. It can be used to
+implement deep layers of access control.</p>
+</div>
+</div>
+<div id="section-roles-and-responibilities" class="section level2">
+<h2>Roles and responibilities</h2>
+<ul>
+<li>App Developer<br />
+</li>
+<li>App Admin<br />
+</li>
+<li>App Publisher</li>
+</ul>
+<p><em>App Developer</em> is responsible to find an <em>App Admin</em>
+to provide Access units and panels.<br />
+<em>App Developer</em> will configure rAccess accordingly and implement
+the controlling logic in the app.<br />
+<em>App Publisher</em> will work with <em>App Developer</em> to deploy
+the app with correct configuration and add the identified <em>App
+Admin</em> through the rAccess interface.<br />
+<em>App Admin</em> is responsible to manage users assignments in rAccess
+interface.</p>
+</div>
+<div id="section-workflow" class="section level2">
+<h2>Workflow</h2>
+<p><img role="img" src="data:image/png;base64,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L3bL9t13X7vsssusfv36bh4AgGxWJZ9hhoGc0OnNrbbg693BXGrc0HA/G9No/2AOQKYZk7fDblz7fTCXOuPtQ1t4+/X2t7/9zc3v2bPH3co+++xjTz75pB166KFulPSSJom2PNaUzscn8lhNle3xmpJ5jp8q4rnJPk9TRTw32edpKs1zAWQeAjeQIwjcACKlJXD/9c9md1/tgvXu3dH/5qgCHmsqaX28ieeWbkr2eZp4bumnVD63U6dOBG4gQxG4gRxB4AYQKV0V7pt2r7KlE8faSy+95Pprf//9D/uoWrWqffDBB9a4ceNgCYB4FixYQOAGMhh9uAEAQEo1POU0e/755+3dd9+1X/3qV67avd9++7l1un/ttde6+wAAZDsCNwAASLHCSlyTJk3sqaeechXt888/34Vt9ed++umn7a233nKPAQAgmxG4AQBASlUp+C+sUaNG9sgjj9i6detswIABrpn5yJEjg7UAAGQvAjcAAEix6H1NjzzySJs0aZJ9+umnduKJJ9o777wTrAEAIDsRuAEAQEpFVrgjHXbYYXbLLbfYSSedFCwBACA7EbgBAECKMZoyAABC4AYAACnlryMMAECuI3ADAIDUysDrBY8bN86dKPDTwIEDbdu2bW6dbjW/ePFiN58uOobIffh9h48t2jGWRNuN9/jVq1db165d3S0AIHUI3AAAIKUUBjOJgq7k5+cXTfXr17cePXrYl19+6dalm/azfv16a9q0abCkuEWLFhU7vq1bt7rlEyZMcLdlpUu4zZkzx90CAFKHwA0AAFKrIBBmCgVdVX87d+4cLCk0aNAgd7ty5UobMmSITZkyxdq1a2fTp093y/W8bt26FVWb/XJRgH/wwQetefPmblLVOLJSHVltXrVqlQv5tWvXDpbEV716devfv787dn9SIPKY/IkEPUbHrtfgTyJEHuPs2bOLVbjjbUvL/T5Fz9F11v0yvRf+ef71A0CuInADAICUUtDKFDVq1LCGDRva1KlTiwVgBV+FUAXxu+66y10/XFXmvn37umCpWwVeVZs3bdrknh8O3bNmzbJXXnnFVqxYYQ0aNHChvX379kUVaoXrcHV63rx5e4X+RPhjGjVqVFEFXBVzHVPbtm3dses1PPPMM0WhPnyMula6F29bvgKvEwTesmXL3GXetF09ZuHChe45eq4uA3fVVVcVC+gAkEsI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QzNyZBMCN4CsdN1111nVqlXtqaeeslWrVgVLoeZ/jz/+uO2zzz7uPcpVN998s6va/utf/7K///3vwVLEovcKQPZRU3F9Rg4ePLio77Wamqvy7ZuDK/yqL7VCuX+MmpSrj7YCudYrJIueq/WqjKvftwZXKw19Ns2cOdOmTJlStA0/+RHQgUxVpeBDlE9RAFll5cqVdtppp7mQsO+++9qvfvWrYiOl5jJdpkVN9Xbu3Onm33zzTdcPL5eo6aNGytV7oJMyev0K3ojt3HPPtR//+Mf2pz/9KVgCoLwsWLDAOnXqlPCJLz2nQ4cOrlUTkqfQP3/+fOvYsWOwBEgMFW4AWefaa691FVxRqPq///s/e++999x8LlMVQycefNjWyQhddiXX3HTTTe4LlOzZs8dWrFhhc+bMcfOIzb9nAACg9AjcALKKqtuzZ8+2Xbt2BUvMqlWrttflSXKRmpArZHsK3i+99JILnLlC1W01Wfz++++DJYWuueaa4B6ioTEcAADJIXADyCrDhg1zATvMV7nffffdYEnu0QBpzz77bFF128u1KveNN97ompGHqcqtFhA6UYPoFLipcAMAkDgCN4Cs8c9//tMNgKXqtsKBJt+0fL/99svpfmwK1XoPRO+JD0++yr18+XI3n800qu5DDz1UVN3We+DDt+7n8iBypeF/ZwAAQOkRuAFkDYVKH7Jbt27tqnLnnXeeq+IqhD/99NM5WeVWk/Hnn3/evQf777+/9e7d2703p59+elFrgFyocqvv9u7du93vg0bW1SBgumzNj370I7de7xNV7uhoUg4AQHII3ACygi5X8sorr9hPf/pTN6Krv6bogAED7NNPP7WrrrrKVXjHjh3rlueSG264wQ444ADX3F7vxWWXXeaWL1u2zAXMU0891d1m80jda9eutYcfftiFbJ140QByumyNRvD97LPP3O+Fgre/DA6Ko0k5AADJIXADyArz5s2zhQsX2pIlS6xdu3bB0kIKVnfeeaetX7/eXQ7qgw8+CNZkP1X0Tz75ZPfab731Vjv00EODNYXOOussN9CcRul++eWXg6XZRxV+9eN///33rXv37sHSQgra119/vQvevXr1cr9D2BuBGwCAxBG4AWQFVSYjg3YkBe/bb7/dVTlzxYknnmjjx4/fK2hHOvvss23kyJHBXPa58sor9wrakRS8dUk5dUdAcTQp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orCtwTmByuT22293YwpcccUVwRKg7AjcAAAgLp1UA1JBrasuu+wyd5IXqIwmTZpkTzzxhC1cuDBYApQNgRsAAMSlwE2FG2X1zjvv2Msvv2wXXXRRsASofJo3b+6alz/88MPBEqBsCNwA9qLKw+TJk921taNRk3QNqhYeQA1AdiNwo6wUYNq3b2+tWrUKlgCVk04K6ff1iy++CJYAySNwAwCAuGhSjlRQgPnd734XzAGVlyrcxx9/vD366KPBEiB5BG4AABAXTcpRVuvWrXMjP6vCDWSCM844wz788MNgDkgegRsAAJSIwI2yyMvLc79DjRo1CpYAlZt+V9esWRPMAckjcAMAgLhoUo6yUnBRgKlala+eyAyNGzcmcCMl+KsHAADiokk5ykp9YTlxg0yyceNGAjdSgsANAABi8iGJwI2y+PGPf2yffvqpff3118ESoHJT2OYkEVKBwA0AAEpE4EZZ1KlTx3bs2GHLly8PlgCV2wcffMDfPaQEgRsAAMREhQepsP/++1vNmjXtzTffDJYAlds777xD4EZKELgBAEBMNClHqtStW9duu+02LrWESu/WW291J4j4u4dUIHADAIAS8cUTZdWgQQM7/fTT7dJLLw2WAJXPW2+9Zdddd531798/WAKUDYEbAADERJNypNLIkSNt4cKFdu+99wZLgMqlS5cudskll1jHjh2DJUDZELgBAEBMNClHKrVt29aF7t///vf21FNPBUuBirdz50479thj7cgjj3S/o0CqELgBAECJCNxIlTFjxtgTTzxhv/vd72z8+PHBUqDizJw50w4++GBr3ry5vfrqq3bMMccEa4CyI3ADAICYaFKOdPjNb35jr7zyigs65513nrvmMVARJkyYYL/+9a/tyiuvdL+PBx10ULAGSA0CNwAAiIkm5UiXVq1a2UsvvWR79uyx9u3b24033mifffZZsBZIrxdeeMHOPfdc+9Of/mQPPfSQG0EfSAcCNwAAKBGBG+mgS4WpqqhB1DSYWsuWLV2Tc4I30sUH7b59+9pJJ51kr7/+uhskDUgXAjcAAIiJJuUoDz179rS5c+fa7bffbn//+9+LgveKFSuCRwDJ2759uz355JMuaOt3rXHjxvbGG2/YLbfcYkcffXTwKCA9CNwAACAmmpSjPKnquHjxYhe2//GPf9hpp51mP//5z23y5Mm2YcOG4FFA6SxYsMCGDBliJ5xwgv3hD39w14JXRfvuu++2448/PngUkF4EbgAAUCICN8rTpZdeavPmzXOhW8HopptucqHpoosusmeffTZ4FLC3VatW2a233mqtW7e2Tp062TvvvGPXXnutu73vvvvcSORAeSJwAwCAmGhSjoqkwdQmTpzowpJGk1aVu0ePHtawYUPr37+/Pfjgg5aXlxc8GrlK/f/Hjh1rnTt3didmHnjgAWvTpo299tpr9re//c0GDBhgtWvXDh4NlC8CNwAAiIkm5UgFVR3VlDdZukbyxRdfbC+//LLbzuWXX25ffvmlay6s/rjq8z106FBXFUf206B6U6dOtd/+9rdu4L0zzzzTnnnmGTv55JPtqaeesnfffdeNPq4qd7L0u7Z79+5gDkgegRsAAJSIwI2yOOKII+ybb76x9957L1iSvDPOOMP++Mc/ukuKff75566JuaqZqmSeddZZduCBB9ovf/lLGz16tAtha9euDZ6JTLRjxw5bunSpq1pfdtll1qxZMzvyyCPt97//ve3cudPGjx/vfq/efPNNu+eee6x3797ud6Cs1HKCv3tIBQI3AACIiSblSIVatWpZtWrVXChKJQWr7t27u6D173//29avX++CWf369W3OnDnWp08fa9SokR166KEujKsKPn36dFcBReXz1VdfuVYKqk7369fPXbbrgAMOcJVqjSi+ceNG16VgyZIl7rFPPPGEa/nQtGnTYAupw+8IUqVKwQcpn6QAspLOTM+fP986duwYLIFo1FYNJJPrf/7btm3rvqgPHz48WIJoVJU86KCDbNmyZXb66acHS4HEaNTx+++/37p27eqaApent99+2wX98LRlyxbbf//93SjofjrllFNc33A1UUZ66TJdannw4YcfFvu5+NYITZo0Kfaz0VSnTh23rjwsWrTIjR9QtWpVmpWjzAjcALIWgTs6AnchAnfp+MD9r3/9y1q0aBEsBRKjwK0m4Br8bNSoUW7U6Iq0Zs2aYkFPk/oFiyqqCt5+OuaYY4rNE8hL5gO1n/7zn/8Umw9f4i0yWGuqUaNGsLZidOnSxWrWrGnPP/+87dq1K1gKJIfADSBrEbijI3AXInCXzn//+183YBWBG2WhwK2qoZp1X3/99e5Ezo9+9KNgbeXw9ddfu2Dow2Hk/U2bNrnHRQbyo48+2lVfDzvssGK35VmRLS/btm2zL774wr0XuvX31dQ7WqBWNwK9Rzpp4U9cRN6vbG6++WZ79NFHXRN29QcncKOsCNwAshaBOzoCdyECd+mo6e0hhxxiy5cvd5UnIBk+cM+dO9dduknhVr9TmeS7776LGsY/+eSTovCpfsWePoMiQ3j41t9XgFcw1bTPPvsU3U9kfs+ePS4Yqvmzbv2UyLx+JuEwHRmqdav3wFOTfP8aVPWPFqrVlz6TvPDCC27Avccee8ydSFGlW+8NUBYEbgBZi8AdHYG7EIG7dHzgVpPb5s2bB0uBxIQD98cff+wGuvrnP/9pr776alb9XinARgut0cKrv9VI25WBWrKETwREuw3fV5PrbNKrVy+bNWuWu+67RkDXZyWBG6lA4AaQtQjc0RG4CxG4S0dVL40wTeBGWYQDt3fllVfafffdZ3fddZf94Q9/CJbmHl9lTqQaHTmvwb0iq96JzuszMxfpM/Gqq65y13WfPHmy/eIXvyhaTuBGKnBZMAAAEJM/MZOrX8aRPvfee6+7/NOQIUPcya9XXnklWJNbFHjVPFsDhWmAQl3C7PDDD7d69eq5Zs26rNmPf/xjd+mrk08+2Z34atmypf30pz91Jw47dOjgRtTWpbN0jXKNtXDqqafaiSeeaMcff7wde+yxRc27dT10VajVakV96NWcfd99983Jf9/ffvut6699zjnnuPdc13H3YRtIJQI3AAAoEYEb6XD11VfbX//6V/v+++9dNVFNzVeuXBmsBdLjwQcftFatWtmdd97prs3+8ssvuxMUQDoQuAEAQEz0PEO6aZAqBZ4nn3zSPvroIxeE/vjHP9r69euDRwCpoT7a6mamVhXdunWz119/3caOHesq/UC6ELgBAEBMNClHeenTp4/rN/vAAw+48TfUdPrSSy91I0cDyfrwww9twoQJrtm9BkY76aSTXNDWssaNGwePAtKHwA0AAEpE4EZ5+d///V8XiP7f//t/bv6SSy6xU045xUaNGmXLli1zy4B41D972rRpdt5559kJJ5xgzz//vBsnYNWqVTZp0iQXuoHyQuAGAAAx0aQcFUVNzR966CFbvXq1u5qAblWl/NnPfmZ33323/etf/woeCZj997//teeee86Nfq+Qfccdd7iB5hYvXuwuP6e+2k2aNAkeDZQfAjcAAIiJJuVIBTUVX7NmTTCXGF0fun///jZjxgxXofQjmmuEbg10NWDAALdOVU3klnfeecddWq5nz55uFPbRo0e7Ud//8pe/uMH3xo0bZz/5yU+CRydm6dKltmfPnmAOSB6BGwAAlIjAjbLQZa0+/fRTd133stDlra644grXRHjdunWu8q2grWU1a9Z0l8i67bbbXPWbsJR9NJDeM888Y5dffrkdd9xx7jJpM2fOdAPtqd+/QrZaP5x99tnBM5KnE0S08EEqELgBAEBMfOFEKujazzt27LDly5cHS8pO16pWf+/p06fb559/bnPnzrXTTz/d9f3WdapV6dTAaxdddJHdc889tnDhQqrgGeSDDz5wLReuu+46N6K4riF+1FFHuWr2hg0bbOTIkS6AK2jrxIt+5qmk/XOiEalA4AYAADHRpBypsP/++7sK9JtvvhksSb2zzjrLXVdZfb1VTX/xxRfdoFnffPONTZw40c4880x3DMcff7wbEf3WW2+1OXPmuLCOiqXK9COPPGJXXXVVsZ+TTpboRIlaSNxyyy3uhI3+JqnKrZMtRx55ZLCF1FNzdf7uIRWqFPzScuoaQFbSB6XOfOuam/iB+lJ26tQp5yuX6v+pvqCqjCC2jRs3Wt26de29995zAxAByRgzZowbNVoDW7322muuOXB527Jliwv84entt99269T/VyOhN2zY0DVb162f9PuPstm+fbutXbu2aPrPf/7jblVF1s9Bzf/VCuK0004rNlXUIGc6GfPoo4+649u1a1ewFEgOgRtA1iJwR0fgLkTgLh013axXrx6BG2WiwL1o0SL76quv7KCDDnJ/myuDnTt3FoVvDcjmg6BuN2/e7B5zwAEHFAvgBPK9xQrUftLfEalatWrRe+inFi1auHB99NFHu8dUtLfeestOPfVU+9Of/uQ+HwjcKCsCN4CsReCOjsBdiMBdOp999plrtqkwwiV1kCwfuNWXWtdA1q0u31SZqSm6D4/hIO7v+6bo++67rx122GGuQhu+jbbM36p/eWWm1/7FF1/Ypk2b3G34fuStJrUeEHUd8EE6HKz9/coSquNRX3H1E1e3gy5duhC4UWYEbgBZi8AdHYG7EIG7dHzgVr9Y9akEkuEDtwY20/0bb7zR/vznP9vFF18cPCLzbNu2zYXvTz75xI2+rup9tNvIZd9//73VqlWrKJSrgq4AXq1ataIp0Xk1yVYw9NPu3bsTntex+RCtAe7UEkHH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I3ADAICYaFIOAEDyqhR8kHLqGhlLXwLHjBlTVIHRfLT7JYn1vES2EU+y20/HsWSaV1991Tp06OB+zonSezZ//nzr2LFjsASyYMEC69SpU07+PoW1bdvWunfvbsOHDw+WIJpbb73V/vrXv9prr70WLAESp7/hixYtsrlz5wZLgMpNn5VdunSxXbt2BUuA5BC4kdEUGpD9CNypReAuROAunVtuucWef/55AjfKhMCNTEPgRqoQuAFkLQJ3dATuQgTu0rn55pvtxRdftMWLFwdLgMQRuJFpCNxIFfpwAwCAuHTyCgAAJI7ADQAAYqIhHAAAySNwAwCAmBS4qXADAJAcAjcAAIiLwI2yOuigg2zLli3BHFD5ff311+73FigrAjcAAIiJJuVIhcaNG9uaNWuCOaDy0++rfm+BsiJwAwCAmGhSjlRQcNm8ebObgEyQl5dH4EZKELgBAEBcBG6UVaNGjdytQgyQCfS76n9vgbIgcAMAgJhoUo5UqFmzpnXs2NGmTp0aLAEqr48//thefPFFO+uss4IlQPII3AAAICaalCNVfve739nDDz9s33//fbAEqJz0e9qsWTM7++yzgyVA8gjcAAAASLv+/ftbjRo1XJgBKjP9jl500UXBHFA2BG4AAACUC4WY2267jUuEodK65ZZb3OB+BG6kCoEbAAAA5eLmm2+2ww8/3K644opgCVB5/OMf/7Drr7/e7rvvPq7BjZQhcAMAAKDcTJo0yaZNm2aTJ08OlgAVb/fu3e5E0IABA1z3ByBVCNwAAAAoN6effrpNnDjRBg8ebM8//3ywFKhY/fr1sz179rjqNpBKBG4AAACUq9///vd27bXX2rnnnmtPP/10sBSoGD169LBly5bZU089ZdWqVQuWAqlB4AYAAEC5Gz9+vI0dO9Z69+7N9blRIXbs2GE///nP7cMPP7TZs2fbSSedFKwBUofADQAAgAoxatQou+OOO+y3v/2tC99AeXn99dftzDPPtE2bNrmwfeyxxwZrgNQicAMAAKDCDB061B5//HG755577Gc/+5mtXr06WAOkx5133mk//elPrWnTpjZv3jyrX79+sAZIPQI3AAAAKtT5559vK1assAMPPNCaN29uf/7zn4M1QOp88sknrr+2Lv310EMP2aOPPmo1a9YM1gLpQeAGAAAlWrBgQXAPSI+jjjrKnn32Wbvpppvs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" /></p>
+<p>To use a rAccess security model, there are three distinct sets of
+actions that will be carried out by different roles.</p>
+<p><strong>Design phase</strong> :</p>
+<ul>
+<li>App developer should identify Access Panels and a number of Access
+Units within each Access Panel.</li>
+</ul>
+<p><strong>Development phase</strong> :</p>
+<ul>
+<li>App developer lists the Access Panels and Access units in a config
+Yaml file.<br />
+</li>
+<li>App developer will implement the required server side controlling
+logic.</li>
+</ul>
+<p><strong>Publishing phase</strong> :</p>
+<ul>
+<li>App publisher will publish the app with the sharing settings
+of:<br />
+All users - login required<br />
+</li>
+<li>App publisher will assign the identified App Admin as an admin to
+the deployed app, using the rAccess interface.</li>
+</ul>
+<p><strong>Post-deployment</strong> :</p>
+<ul>
+<li><p>App admin controls and maintains access lists within the app. A
+nice shiny GUI is provided to facilitate this.<br />
+</p></li>
+<li><p>Audit trails are available for Access lists of all applications
+that utilize rAccess</p>
+<ul>
+<li>All past versions of Access lists per application are
+available<br />
+</li>
+<li>For any particular application, one can obtain the effective access
+lists at a certain time in history (e.g. effective access list for
+application A at 10:52 on 10 April 2022.</li>
+</ul></li>
+</ul>
+</div>
+<div id="section-implementation" class="section level2">
+<h2>Implementation</h2>
+<p>The <code>rAccess</code> package includes the ui and server module
+for the access control tab:</p>
+<ul>
+<li>module_iam_ui()</li>
+<li>module_iam_server()</li>
+</ul>
+<p>and these could be plugged into the ui and server of the main
+application.</p>
+<p><strong>module_iam_server()</strong> takes the arguments:</p>
+<ul>
+<li><code>id</code> - Module id</li>
+<li><code>rAccess_obj</code> - An instance of the R6 class object
+<code>rAccess</code></li>
+</ul>
+<p>Once the <code>access panels</code> and <code>access units</code> are
+identified, the developer can create a new instance of the R6 object
+<code>rAccess</code>.</p>
+<p>The parameters to the <code>rAccess</code> object can either be
+passed directly as arguments to the new instance of <code>rAccess</code>
+or could be defined within a configuration yaml file.</p>
+<div id="section-adding-raccess-config-file" class="section level3">
+<h3>Adding rAccess config file</h3>
+<p>To add a config file template to your project directory use:</p>
+<pre><code>rAccess::use_config(file_name = &quot;rAccess.yml&quot;)</code></pre>
+</div>
+</div>
+<div id="section-config-file-structure" class="section level2">
+<h2>Config file structure</h2>
+<pre><code>module: rAccess
+parameters:
+  app_name:                 # application name *
+  board_type:               # local/rconnect/s3 *   
+  access_mode:              # default/single unit
+  unit_display:             # dropdown/switch
+  switch_size:              # default/mini/small/normal/large
+  user_df: !expr tibble::tribble(          
+    ~userid, ~username,
+    &quot;UserID&quot;, &quot;User Name&quot;)        # Sample user_df
+  use_rconnect_users: TRUE        # TRUE - combine rconnect userlist with user_df
+  secure_mode: FALSE              # TRUE - Access will be denied to users with no access to atleast one panel/unit
+  local_board_path:               # Path to save local pin_board when board_type = &quot;local&quot;    
+  s3_bucket:                      # s3 bucket name when board_type = &quot;s3&quot;      
+  s3_access_key:                  # s3 access key when board_type = &quot;s3&quot; 
+  s3_secret_key:                  # s3 secret key when board_type = &quot;s3&quot; 
+  verbose: FALSE                  # If TRUE Prints all changes in the log
+
+data:                             # Study data path if available  
+  datapath1:     
+  datapath2: 
+
+panel_str:                        # Panel structure to be defined by the developer
+  - access_panel: ADMIN           # Every App should have an ADMIN panel.(mandatory)
+
+  - access_panel:                 # Access Panel name *
+    access_units:
+      - unit:                     # Access unit name  *
+      - unit:                     # Access unit name
+
+  - access_panel:                 # Access Panel name *
+    access_units:
+      - unit:
+        data:                     # datapath associated with access unit  
+      - unit:                     
+        data:                     # datapath associated with access unit</code></pre>
+<div id="section-parameters" class="section level3">
+<h3>Parameters</h3>
+<ul>
+<li><p><strong>app_name</strong> Application Name. The same will be used
+as pin_name.</p></li>
+<li><p><strong>board_type</strong> Takes values:</p>
+<ul>
+<li><code>&quot;local&quot;</code> for a local pin board.</li>
+<li><code>&quot;s3&quot;</code> for using s3 bucket to save pin board.</li>
+<li><code>&quot;rconnect&quot;</code> for rconnect pin board.</li>
+</ul></li>
+</ul>
+<p>Pin_board is created using the <code>pins</code> package to store the
+access data. It could be a local folder when running the app
+interactively. When deployed to connect servers, the S3 bucket or
+rsconnect pin_board must be used.</p>
+<ul>
+<li><p><strong>access_mode</strong> - Enables user to select access
+modes. Available access modes are :</p>
+<ul>
+<li><code>default</code> - Allows access to multiple access panels and
+multiple access units</li>
+<li><code>single unit</code> - Allows access to single access unit
+within an access panel.</li>
+</ul></li>
+<li><p><strong>unit_display</strong> - Defines the display type for
+access units in the ui. Takes values : ‘switch’, ‘dropdown’. It defaults
+to toggle switches.</p></li>
+<li><p><strong>switch_size</strong> - Defines the size of toggle
+switches used in access control ui. It takes values : ‘default’, ‘mini’,
+‘small’, ‘normal’, ‘large’.</p></li>
+<li><p><strong>user_df</strong> - A data frame with userid and username
+or NULL. If the <code>user_df</code> is provided, then the access module
+will search for potential users from within the given data frame in
+interactive mode.</p></li>
+</ul>
+<pre><code>user_df &lt;- tibble::tribble(
+  ~userid, username,
+  &quot;UserId1&quot;, &quot;User Name 1&quot;,
+  &quot;UserId2&quot;, &quot;User Name 2&quot;,
+  &quot;UserId3&quot;, &quot;User Name 3&quot;,
+  &quot;UserId4&quot;, &quot;User Name 4&quot;,
+  &quot;UserId5&quot;, &quot;User Name 5&quot;
+)</code></pre>
+<ul>
+<li><p><strong>use_rconnect_users</strong> Takes
+<code>TRUE/FALSE</code>. If TRUE the rconnect user list will be combined
+with the user_df. This will only affect the deployed apps in Posit
+Connect servers.</p></li>
+<li><p><strong>safe_mode</strong> Takes <code>TRUE/FALSE</code> If TRUE
+then access to the app will be denied to users with no access to at
+least one panel/unit.</p></li>
+<li><p><strong>local_board_path</strong> - Path to the local folder to
+save pin board when board_type = “local”. Local pin_boards are mainly
+useful when the app running interactively, but you can also deploy the
+app with this option. However, you will lose the saved access lists if
+you re-deploy the app. By default the local path will be data folder in
+the root directory.</p></li>
+<li><p><strong>s3_bucket</strong>, <strong>s3_access_key</strong>,
+<strong>s3_secret_key</strong> - S3 bucket credentials to be used when
+board_type = “s3”.</p></li>
+<li><p><strong>verbose</strong> If TRUE Prints all data base changes in
+log. To be used for debugging.</p></li>
+</ul>
+</div>
+<div id="section-data" class="section level3">
+<h3>data</h3>
+<p>The study data path associated to the access units (if any) should be
+added in this section as <code>dathapath1</code>,
+<code>datapath2</code>, …</p>
+<pre><code>data: 
+  datapath1: &quot;testpath/data/path1&quot;
+  datapath2: &quot;testpath/data/path2&quot;
+</code></pre>
+<p>The datapaths will not be displayed anywhere in the access control UI
+but will be saved as part of the panel structure and developers can
+access them using <code>panel_config</code>.
+e.g. <code>newIAM$panel_config</code></p>
+</div>
+<div id="section-panel-structure" class="section level3">
+<h3>Panel Structure</h3>
+<p>The panel structure for each access panel is to maintained as given
+in the sample config file. Every access control module must have an
+‘ADMIN’ panel and it has no units. This will be defined under panel_str
+as:</p>
+<pre><code>panel_str:
+  - access_panel: ADMIN</code></pre>
+<p>All other access panels should follow the structure:</p>
+<pre><code> - access_panel: &quot;Access Panel 1&quot; 
+    access_units:
+      - unit: &quot;Unit 1&quot;
+        data: datapath1
+      - unit: &quot;Unit 2&quot;
+        data: datapath2</code></pre>
+<p>If there are multiple datapaths associated with an access unit then,
+it could be defined as:</p>
+<pre><code>- access_panel: &quot;Access Panel 1&quot; 
+    access_units:
+      - unit: &quot;Unit 1&quot;
+        data: !expr c(&#39;datapath1&#39;, &#39;&#39;datapath2`)
+</code></pre>
+</div>
+<div id="section-creating-a-new-instance-of-raccess-with-config-file" class="section level3">
+<h3>Creating a new instance of rAccess with Config file</h3>
+<p>Once the configuration file is ready the user can create a new
+instance of <code>rAccess</code> as below:</p>
+<pre><code>newIAM &lt;- rAccess$new(user = &quot;UserID&quot;, config = &quot;rAccess.yml&quot;)</code></pre>
+<p>When deploying apps, you should always use <code>session$user</code>
+as the <code>user</code> to ensure the app recognizes who is currently
+logged in.</p>
+</div>
+</div>
+<div id="section-demo" class="section level2 tabset">
+<h2 class="tabset">Demo</h2>
+<div id="section-demo_app.r-without-raccess" class="section level3">
+<h3>demo_app.R without rAccess</h3>
+<div class="sourceCode" id="section-cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb10-1"><a href="#section-cb10-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="section-cb10-2"><a href="#section-cb10-2" tabindex="-1"></a></span>
+<span id="section-cb10-3"><a href="#section-cb10-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="section-cb10-4"><a href="#section-cb10-4" tabindex="-1"></a>  <span class="fu">navbarPage</span>(</span>
+<span id="section-cb10-5"><a href="#section-cb10-5" tabindex="-1"></a>    <span class="st">&quot;Demo!&quot;</span>,</span>
+<span id="section-cb10-6"><a href="#section-cb10-6" tabindex="-1"></a>    <span class="fu">tabPanel</span>(</span>
+<span id="section-cb10-7"><a href="#section-cb10-7" tabindex="-1"></a>      <span class="st">&quot;Plot&quot;</span>,</span>
+<span id="section-cb10-8"><a href="#section-cb10-8" tabindex="-1"></a>      <span class="fu">sidebarLayout</span>(</span>
+<span id="section-cb10-9"><a href="#section-cb10-9" tabindex="-1"></a>        <span class="fu">sidebarPanel</span>(</span>
+<span id="section-cb10-10"><a href="#section-cb10-10" tabindex="-1"></a>          <span class="fu">radioButtons</span>(</span>
+<span id="section-cb10-11"><a href="#section-cb10-11" tabindex="-1"></a>            <span class="st">&quot;plotType&quot;</span>, <span class="st">&quot;Plot type&quot;</span>,</span>
+<span id="section-cb10-12"><a href="#section-cb10-12" tabindex="-1"></a>            <span class="fu">c</span>(<span class="st">&quot;Scatter&quot;</span> <span class="ot">=</span> <span class="st">&quot;p&quot;</span>, <span class="st">&quot;Line&quot;</span> <span class="ot">=</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="section-cb10-13"><a href="#section-cb10-13" tabindex="-1"></a>          )</span>
+<span id="section-cb10-14"><a href="#section-cb10-14" tabindex="-1"></a>        ),</span>
+<span id="section-cb10-15"><a href="#section-cb10-15" tabindex="-1"></a>        <span class="fu">mainPanel</span>(</span>
+<span id="section-cb10-16"><a href="#section-cb10-16" tabindex="-1"></a>          <span class="fu">plotOutput</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="section-cb10-17"><a href="#section-cb10-17" tabindex="-1"></a>        )</span>
+<span id="section-cb10-18"><a href="#section-cb10-18" tabindex="-1"></a>      )</span>
+<span id="section-cb10-19"><a href="#section-cb10-19" tabindex="-1"></a>    ),</span>
+<span id="section-cb10-20"><a href="#section-cb10-20" tabindex="-1"></a>    <span class="fu">tabPanel</span>(</span>
+<span id="section-cb10-21"><a href="#section-cb10-21" tabindex="-1"></a>      <span class="st">&quot;Summary&quot;</span>,</span>
+<span id="section-cb10-22"><a href="#section-cb10-22" tabindex="-1"></a>      <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;summary&quot;</span>)</span>
+<span id="section-cb10-23"><a href="#section-cb10-23" tabindex="-1"></a>    ),</span>
+<span id="section-cb10-24"><a href="#section-cb10-24" tabindex="-1"></a>    <span class="fu">navbarMenu</span>(</span>
+<span id="section-cb10-25"><a href="#section-cb10-25" tabindex="-1"></a>      <span class="st">&quot;More&quot;</span>,</span>
+<span id="section-cb10-26"><a href="#section-cb10-26" tabindex="-1"></a>      <span class="fu">tabPanel</span>(</span>
+<span id="section-cb10-27"><a href="#section-cb10-27" tabindex="-1"></a>        <span class="st">&quot;Table&quot;</span>,</span>
+<span id="section-cb10-28"><a href="#section-cb10-28" tabindex="-1"></a>        DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">&quot;table&quot;</span>)</span>
+<span id="section-cb10-29"><a href="#section-cb10-29" tabindex="-1"></a>      ),</span>
+<span id="section-cb10-30"><a href="#section-cb10-30" tabindex="-1"></a>      <span class="fu">tabPanel</span>(</span>
+<span id="section-cb10-31"><a href="#section-cb10-31" tabindex="-1"></a>        <span class="st">&quot;About&quot;</span>,</span>
+<span id="section-cb10-32"><a href="#section-cb10-32" tabindex="-1"></a>        <span class="fu">fluidRow</span>(</span>
+<span id="section-cb10-33"><a href="#section-cb10-33" tabindex="-1"></a>          <span class="fu">column</span>(</span>
+<span id="section-cb10-34"><a href="#section-cb10-34" tabindex="-1"></a>            <span class="dv">6</span>,</span>
+<span id="section-cb10-35"><a href="#section-cb10-35" tabindex="-1"></a>            <span class="fu">h1</span>(<span class="st">&quot;this is a sample app&quot;</span>)</span>
+<span id="section-cb10-36"><a href="#section-cb10-36" tabindex="-1"></a>          )</span>
+<span id="section-cb10-37"><a href="#section-cb10-37" tabindex="-1"></a>        )</span>
+<span id="section-cb10-38"><a href="#section-cb10-38" tabindex="-1"></a>      )</span>
+<span id="section-cb10-39"><a href="#section-cb10-39" tabindex="-1"></a>    )</span>
+<span id="section-cb10-40"><a href="#section-cb10-40" tabindex="-1"></a>  )</span>
+<span id="section-cb10-41"><a href="#section-cb10-41" tabindex="-1"></a>}</span>
+<span id="section-cb10-42"><a href="#section-cb10-42" tabindex="-1"></a></span>
+<span id="section-cb10-43"><a href="#section-cb10-43" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="section-cb10-44"><a href="#section-cb10-44" tabindex="-1"></a>  output<span class="sc">$</span>plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="section-cb10-45"><a href="#section-cb10-45" tabindex="-1"></a>    <span class="fu">plot</span>(cars, <span class="at">type =</span> input<span class="sc">$</span>plotType)</span>
+<span id="section-cb10-46"><a href="#section-cb10-46" tabindex="-1"></a>  })</span>
+<span id="section-cb10-47"><a href="#section-cb10-47" tabindex="-1"></a></span>
+<span id="section-cb10-48"><a href="#section-cb10-48" tabindex="-1"></a>  output<span class="sc">$</span>summary <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
+<span id="section-cb10-49"><a href="#section-cb10-49" tabindex="-1"></a>    <span class="fu">summary</span>(cars)</span>
+<span id="section-cb10-50"><a href="#section-cb10-50" tabindex="-1"></a>  })</span>
+<span id="section-cb10-51"><a href="#section-cb10-51" tabindex="-1"></a></span>
+<span id="section-cb10-52"><a href="#section-cb10-52" tabindex="-1"></a>  output<span class="sc">$</span>table <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
+<span id="section-cb10-53"><a href="#section-cb10-53" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(cars)</span>
+<span id="section-cb10-54"><a href="#section-cb10-54" tabindex="-1"></a>  })</span>
+<span id="section-cb10-55"><a href="#section-cb10-55" tabindex="-1"></a>}</span>
+<span id="section-cb10-56"><a href="#section-cb10-56" tabindex="-1"></a></span>
+<span id="section-cb10-57"><a href="#section-cb10-57" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+</div>
+<div id="section-demo_app.r-with-raccess" class="section level3">
+<h3>demo_app.R with rAccess</h3>
+<div class="sourceCode" id="section-cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb11-1"><a href="#section-cb11-1" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="section-cb11-2"><a href="#section-cb11-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="section-cb11-3"><a href="#section-cb11-3" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;DT&#39;</span></span>
+<span id="section-cb11-4"><a href="#section-cb11-4" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:shiny&#39;:</span></span>
+<span id="section-cb11-5"><a href="#section-cb11-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="section-cb11-6"><a href="#section-cb11-6" tabindex="-1"></a><span class="co">#&gt;     dataTableOutput, renderDataTable</span></span>
+<span id="section-cb11-7"><a href="#section-cb11-7" tabindex="-1"></a><span class="fu">library</span>(pins)</span>
+<span id="section-cb11-8"><a href="#section-cb11-8" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="section-cb11-9"><a href="#section-cb11-9" tabindex="-1"></a><span class="fu">library</span>(rAccess)</span>
+<span id="section-cb11-10"><a href="#section-cb11-10" tabindex="-1"></a></span>
+<span id="section-cb11-11"><a href="#section-cb11-11" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">navbarPage</span>(</span>
+<span id="section-cb11-12"><a href="#section-cb11-12" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">&quot;mainpage&quot;</span>,</span>
+<span id="section-cb11-13"><a href="#section-cb11-13" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">&quot;Demo!&quot;</span>,</span>
+<span id="section-cb11-14"><a href="#section-cb11-14" tabindex="-1"></a>  <span class="fu">tabPanel</span>(</span>
+<span id="section-cb11-15"><a href="#section-cb11-15" tabindex="-1"></a>    <span class="st">&quot;Plot&quot;</span>,</span>
+<span id="section-cb11-16"><a href="#section-cb11-16" tabindex="-1"></a>    <span class="fu">sidebarLayout</span>(</span>
+<span id="section-cb11-17"><a href="#section-cb11-17" tabindex="-1"></a>      <span class="fu">sidebarPanel</span>(</span>
+<span id="section-cb11-18"><a href="#section-cb11-18" tabindex="-1"></a>        <span class="fu">radioButtons</span>(</span>
+<span id="section-cb11-19"><a href="#section-cb11-19" tabindex="-1"></a>          <span class="st">&quot;plotType&quot;</span>, <span class="st">&quot;Plot type&quot;</span>,</span>
+<span id="section-cb11-20"><a href="#section-cb11-20" tabindex="-1"></a>          <span class="fu">c</span>(<span class="st">&quot;Scatter&quot;</span> <span class="ot">=</span> <span class="st">&quot;p&quot;</span>, <span class="st">&quot;Line&quot;</span> <span class="ot">=</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="section-cb11-21"><a href="#section-cb11-21" tabindex="-1"></a>        )</span>
+<span id="section-cb11-22"><a href="#section-cb11-22" tabindex="-1"></a>      ),</span>
+<span id="section-cb11-23"><a href="#section-cb11-23" tabindex="-1"></a>      <span class="fu">mainPanel</span>(</span>
+<span id="section-cb11-24"><a href="#section-cb11-24" tabindex="-1"></a>        <span class="fu">plotOutput</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="section-cb11-25"><a href="#section-cb11-25" tabindex="-1"></a>      )</span>
+<span id="section-cb11-26"><a href="#section-cb11-26" tabindex="-1"></a>    )</span>
+<span id="section-cb11-27"><a href="#section-cb11-27" tabindex="-1"></a>  ),</span>
+<span id="section-cb11-28"><a href="#section-cb11-28" tabindex="-1"></a>  <span class="fu">tabPanel</span>(</span>
+<span id="section-cb11-29"><a href="#section-cb11-29" tabindex="-1"></a>    <span class="st">&quot;Summary&quot;</span>,</span>
+<span id="section-cb11-30"><a href="#section-cb11-30" tabindex="-1"></a>    <span class="fu">verbatimTextOutput</span>(<span class="st">&quot;summary&quot;</span>)</span>
+<span id="section-cb11-31"><a href="#section-cb11-31" tabindex="-1"></a>  ),</span>
+<span id="section-cb11-32"><a href="#section-cb11-32" tabindex="-1"></a>  <span class="fu">navbarMenu</span>(</span>
+<span id="section-cb11-33"><a href="#section-cb11-33" tabindex="-1"></a>    <span class="st">&quot;More&quot;</span>,</span>
+<span id="section-cb11-34"><a href="#section-cb11-34" tabindex="-1"></a>    <span class="fu">tabPanel</span>(</span>
+<span id="section-cb11-35"><a href="#section-cb11-35" tabindex="-1"></a>      <span class="st">&quot;Table&quot;</span>,</span>
+<span id="section-cb11-36"><a href="#section-cb11-36" tabindex="-1"></a>      DT<span class="sc">::</span><span class="fu">dataTableOutput</span>(<span class="st">&quot;table&quot;</span>)</span>
+<span id="section-cb11-37"><a href="#section-cb11-37" tabindex="-1"></a>    ),</span>
+<span id="section-cb11-38"><a href="#section-cb11-38" tabindex="-1"></a>    <span class="fu">tabPanel</span>(</span>
+<span id="section-cb11-39"><a href="#section-cb11-39" tabindex="-1"></a>      <span class="st">&quot;About&quot;</span>,</span>
+<span id="section-cb11-40"><a href="#section-cb11-40" tabindex="-1"></a>      <span class="fu">fluidRow</span>(</span>
+<span id="section-cb11-41"><a href="#section-cb11-41" tabindex="-1"></a>        <span class="fu">column</span>(</span>
+<span id="section-cb11-42"><a href="#section-cb11-42" tabindex="-1"></a>          <span class="dv">6</span>,</span>
+<span id="section-cb11-43"><a href="#section-cb11-43" tabindex="-1"></a>          <span class="fu">h1</span>(<span class="st">&quot;this is a sample app&quot;</span>)</span>
+<span id="section-cb11-44"><a href="#section-cb11-44" tabindex="-1"></a>        )</span>
+<span id="section-cb11-45"><a href="#section-cb11-45" tabindex="-1"></a>      )</span>
+<span id="section-cb11-46"><a href="#section-cb11-46" tabindex="-1"></a>    )</span>
+<span id="section-cb11-47"><a href="#section-cb11-47" tabindex="-1"></a>  ),</span>
+<span id="section-cb11-48"><a href="#section-cb11-48" tabindex="-1"></a>  <span class="fu">tabPanel</span>(</span>
+<span id="section-cb11-49"><a href="#section-cb11-49" tabindex="-1"></a>    <span class="st">&quot;Access Control&quot;</span>,</span>
+<span id="section-cb11-50"><a href="#section-cb11-50" tabindex="-1"></a>    rAccess<span class="sc">::</span><span class="fu">module_iam_ui</span>(<span class="st">&quot;iam&quot;</span>)</span>
+<span id="section-cb11-51"><a href="#section-cb11-51" tabindex="-1"></a>  )</span>
+<span id="section-cb11-52"><a href="#section-cb11-52" tabindex="-1"></a>)</span>
+<span id="section-cb11-53"><a href="#section-cb11-53" tabindex="-1"></a></span>
+<span id="section-cb11-54"><a href="#section-cb11-54" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="section-cb11-55"><a href="#section-cb11-55" tabindex="-1"></a>  <span class="co"># Add sample rAccess config file to the root directory</span></span>
+<span id="section-cb11-56"><a href="#section-cb11-56" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">&quot;sample_rAccess.yml&quot;</span>)) {</span>
+<span id="section-cb11-57"><a href="#section-cb11-57" tabindex="-1"></a>    rAccess<span class="sc">::</span><span class="fu">use_config</span>(<span class="st">&quot;sample_rAccess.yml&quot;</span>)</span>
+<span id="section-cb11-58"><a href="#section-cb11-58" tabindex="-1"></a>  }</span>
+<span id="section-cb11-59"><a href="#section-cb11-59" tabindex="-1"></a></span>
+<span id="section-cb11-60"><a href="#section-cb11-60" tabindex="-1"></a>  <span class="co"># Create new instance of rAccess</span></span>
+<span id="section-cb11-61"><a href="#section-cb11-61" tabindex="-1"></a>  user_id <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">exists</span>(<span class="st">&quot;session$user&quot;</span>), <span class="st">&quot;UserID&quot;</span>, session<span class="sc">$</span>user)</span>
+<span id="section-cb11-62"><a href="#section-cb11-62" tabindex="-1"></a>  newIAM <span class="ot">&lt;-</span> rAccess<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="section-cb11-63"><a href="#section-cb11-63" tabindex="-1"></a>    <span class="at">user =</span> user_id,</span>
+<span id="section-cb11-64"><a href="#section-cb11-64" tabindex="-1"></a>    <span class="at">config =</span> <span class="st">&quot;sample_rAccess.yml&quot;</span></span>
+<span id="section-cb11-65"><a href="#section-cb11-65" tabindex="-1"></a>  )</span>
+<span id="section-cb11-66"><a href="#section-cb11-66" tabindex="-1"></a></span>
+<span id="section-cb11-67"><a href="#section-cb11-67" tabindex="-1"></a>  <span class="cf">if</span> (newIAM<span class="sc">$</span><span class="fu">no_admin</span>() <span class="sc">||</span> newIAM<span class="sc">$</span><span class="fu">is_admin</span>()) {</span>
+<span id="section-cb11-68"><a href="#section-cb11-68" tabindex="-1"></a>    <span class="fu">showTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Access Control&quot;</span>)</span>
+<span id="section-cb11-69"><a href="#section-cb11-69" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="section-cb11-70"><a href="#section-cb11-70" tabindex="-1"></a>    <span class="fu">hideTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Access Control&quot;</span>)</span>
+<span id="section-cb11-71"><a href="#section-cb11-71" tabindex="-1"></a>  }</span>
+<span id="section-cb11-72"><a href="#section-cb11-72" tabindex="-1"></a></span>
+<span id="section-cb11-73"><a href="#section-cb11-73" tabindex="-1"></a>  rAccess<span class="sc">::</span><span class="fu">module_iam_server</span>(<span class="st">&quot;iam&quot;</span>, newIAM)</span>
+<span id="section-cb11-74"><a href="#section-cb11-74" tabindex="-1"></a></span>
+<span id="section-cb11-75"><a href="#section-cb11-75" tabindex="-1"></a>  <span class="co"># Get panels with access</span></span>
+<span id="section-cb11-76"><a href="#section-cb11-76" tabindex="-1"></a>  user_access_list <span class="ot">&lt;-</span> newIAM<span class="sc">$</span><span class="fu">get_user_accesslist</span>()</span>
+<span id="section-cb11-77"><a href="#section-cb11-77" tabindex="-1"></a></span>
+<span id="section-cb11-78"><a href="#section-cb11-78" tabindex="-1"></a>  <span class="co"># Show/Hide: Access Control Panel</span></span>
+<span id="section-cb11-79"><a href="#section-cb11-79" tabindex="-1"></a>  <span class="cf">if</span> (newIAM<span class="sc">$</span><span class="fu">no_admin</span>() <span class="sc">||</span> newIAM<span class="sc">$</span><span class="fu">is_admin</span>()) {</span>
+<span id="section-cb11-80"><a href="#section-cb11-80" tabindex="-1"></a>    <span class="fu">showTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Access Control&quot;</span>)</span>
+<span id="section-cb11-81"><a href="#section-cb11-81" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="section-cb11-82"><a href="#section-cb11-82" tabindex="-1"></a>    <span class="fu">hideTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Access Control&quot;</span>)</span>
+<span id="section-cb11-83"><a href="#section-cb11-83" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">&quot;YOU DO NOT HAVE ADMIN ACCESS&quot;</span>)</span>
+<span id="section-cb11-84"><a href="#section-cb11-84" tabindex="-1"></a>  }</span>
+<span id="section-cb11-85"><a href="#section-cb11-85" tabindex="-1"></a></span>
+<span id="section-cb11-86"><a href="#section-cb11-86" tabindex="-1"></a>  <span class="co"># Show/Hide: plot tab</span></span>
+<span id="section-cb11-87"><a href="#section-cb11-87" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="st">&quot;plot&quot;</span> <span class="sc">%in%</span> user_access_list[[<span class="st">&quot;sum&quot;</span>]]) {</span>
+<span id="section-cb11-88"><a href="#section-cb11-88" tabindex="-1"></a>    <span class="fu">hideTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Plot&quot;</span>)</span>
+<span id="section-cb11-89"><a href="#section-cb11-89" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="section-cb11-90"><a href="#section-cb11-90" tabindex="-1"></a>    <span class="fu">showTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Plot&quot;</span>)</span>
+<span id="section-cb11-91"><a href="#section-cb11-91" tabindex="-1"></a>  }</span>
+<span id="section-cb11-92"><a href="#section-cb11-92" tabindex="-1"></a></span>
+<span id="section-cb11-93"><a href="#section-cb11-93" tabindex="-1"></a>  <span class="co"># Show/hide the Summary Tab</span></span>
+<span id="section-cb11-94"><a href="#section-cb11-94" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="st">&quot;summary&quot;</span> <span class="sc">%in%</span> user_access_list[[<span class="st">&quot;sum&quot;</span>]]) {</span>
+<span id="section-cb11-95"><a href="#section-cb11-95" tabindex="-1"></a>    <span class="fu">hideTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Summary&quot;</span>)</span>
+<span id="section-cb11-96"><a href="#section-cb11-96" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="section-cb11-97"><a href="#section-cb11-97" tabindex="-1"></a>    <span class="fu">showTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Summary&quot;</span>)</span>
+<span id="section-cb11-98"><a href="#section-cb11-98" tabindex="-1"></a>  }</span>
+<span id="section-cb11-99"><a href="#section-cb11-99" tabindex="-1"></a></span>
+<span id="section-cb11-100"><a href="#section-cb11-100" tabindex="-1"></a>  <span class="co"># Show/hide the Table tab</span></span>
+<span id="section-cb11-101"><a href="#section-cb11-101" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="st">&quot;view&quot;</span> <span class="sc">%in%</span> user_access_list[[<span class="st">&quot;data&quot;</span>]]) {</span>
+<span id="section-cb11-102"><a href="#section-cb11-102" tabindex="-1"></a>    <span class="fu">hideTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Table&quot;</span>)</span>
+<span id="section-cb11-103"><a href="#section-cb11-103" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="section-cb11-104"><a href="#section-cb11-104" tabindex="-1"></a>    <span class="fu">showTab</span>(<span class="st">&quot;mainpage&quot;</span>, <span class="at">target =</span> <span class="st">&quot;Table&quot;</span>)</span>
+<span id="section-cb11-105"><a href="#section-cb11-105" tabindex="-1"></a>  }</span>
+<span id="section-cb11-106"><a href="#section-cb11-106" tabindex="-1"></a></span>
+<span id="section-cb11-107"><a href="#section-cb11-107" tabindex="-1"></a>  <span class="co"># ----------------------------------------------------------------------------</span></span>
+<span id="section-cb11-108"><a href="#section-cb11-108" tabindex="-1"></a></span>
+<span id="section-cb11-109"><a href="#section-cb11-109" tabindex="-1"></a>  output<span class="sc">$</span>plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="section-cb11-110"><a href="#section-cb11-110" tabindex="-1"></a>    <span class="fu">plot</span>(cars, <span class="at">type =</span> input<span class="sc">$</span>plotType)</span>
+<span id="section-cb11-111"><a href="#section-cb11-111" tabindex="-1"></a>  })</span>
+<span id="section-cb11-112"><a href="#section-cb11-112" tabindex="-1"></a></span>
+<span id="section-cb11-113"><a href="#section-cb11-113" tabindex="-1"></a>  output<span class="sc">$</span>summary <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
+<span id="section-cb11-114"><a href="#section-cb11-114" tabindex="-1"></a>    <span class="fu">summary</span>(cars)</span>
+<span id="section-cb11-115"><a href="#section-cb11-115" tabindex="-1"></a>  })</span>
+<span id="section-cb11-116"><a href="#section-cb11-116" tabindex="-1"></a></span>
+<span id="section-cb11-117"><a href="#section-cb11-117" tabindex="-1"></a>  output<span class="sc">$</span>table <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">renderDataTable</span>({</span>
+<span id="section-cb11-118"><a href="#section-cb11-118" tabindex="-1"></a>    DT<span class="sc">::</span><span class="fu">datatable</span>(cars)</span>
+<span id="section-cb11-119"><a href="#section-cb11-119" tabindex="-1"></a>  })</span>
+<span id="section-cb11-120"><a href="#section-cb11-120" tabindex="-1"></a>}</span>
+<span id="section-cb11-121"><a href="#section-cb11-121" tabindex="-1"></a></span>
+<span id="section-cb11-122"><a href="#section-cb11-122" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+</div>
+<div id="section-sample-config-file" class="section level3">
+<h3>Sample config file</h3>
+<pre><code>module: rAccess
+parameters:
+  app_name: demoApp                
+  board_type: local                  
+  access_mode: default             
+  unit_display: &#39;dropdown&#39;      
+  switch_size: 
+  user_df: !expr tibble::tribble(                   
+    ~userid, ~username,
+    &quot;UserID&quot;, &quot;User Name 1&quot;,
+    &quot;UserID2&quot;, &quot;User Name 2&quot;,
+  use_rconnect_users: TRUE        
+  local_board_path:                   
+  s3_bucket:                      
+  s3_access_key:                  
+  s3_secret_key:                  
+  verbose: FALSE
+
+data:
+  datapath1:     
+  datapath2: 
+
+panel_str:              
+  - access_panel: ADMIN 
+
+  - access_panel: sum
+    access_units:
+      - unit: plot 
+      - unit: summary
+
+  - access_panel: data
+    access_units:
+      - unit: view    
+</code></pre>
+</div>
+</div>
+<div id="section-audit-trail-functionalities" class="section level2">
+<h2>Audit trail functionalities</h2>
+<p><code>rAccess</code> package also offers additional functions for
+performing audit trail activities.</p>
+<ul>
+<li><strong>get_accesshistory()</strong> - Takes pin_board and pin_name
+as arguments and returns a list of access data created at different time
+points.</li>
+</ul>
+<div class="sourceCode" id="section-cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb13-1"><a href="#section-cb13-1" tabindex="-1"></a>pin_board <span class="ot">&lt;-</span> pins<span class="sc">::</span><span class="fu">board_folder</span>(<span class="at">path =</span> <span class="st">&quot;./data/&quot;</span>)</span>
+<span id="section-cb13-2"><a href="#section-cb13-2" tabindex="-1"></a><span class="fu">get_accesshistory</span>(pin_board, <span class="st">&quot;demo&quot;</span>)</span>
+<span id="section-cb13-3"><a href="#section-cb13-3" tabindex="-1"></a><span class="co">#&gt; $`2023-06-29 08:44:20 Edited by NHarida1`</span></span>
+<span id="section-cb13-4"><a href="#section-cb13-4" tabindex="-1"></a><span class="co">#&gt;   AccessPanel              UserName   UserID  plot summary  view ADMIN   sum</span></span>
+<span id="section-cb13-5"><a href="#section-cb13-5" tabindex="-1"></a><span class="co">#&gt; 1       ADMIN Nandukrishnan Haridas NHarida1 FALSE   FALSE FALSE  TRUE  TRUE</span></span>
+<span id="section-cb13-6"><a href="#section-cb13-6" tabindex="-1"></a><span class="co">#&gt; 2       ADMIN         Peyman Eshghi  PEshghi FALSE   FALSE FALSE  TRUE  TRUE</span></span>
+<span id="section-cb13-7"><a href="#section-cb13-7" tabindex="-1"></a><span class="co">#&gt; 3        data Nandukrishnan Haridas NHarida1  TRUE   FALSE FALSE FALSE FALSE</span></span>
+<span id="section-cb13-8"><a href="#section-cb13-8" tabindex="-1"></a><span class="co">#&gt; 4        data         Peyman Eshghi  PEshghi  TRUE   FALSE FALSE FALSE FALSE</span></span>
+<span id="section-cb13-9"><a href="#section-cb13-9" tabindex="-1"></a><span class="co">#&gt; 5         sum         Peyman Eshghi  PEshghi  TRUE    TRUE FALSE FALSE FALSE</span></span>
+<span id="section-cb13-10"><a href="#section-cb13-10" tabindex="-1"></a><span class="co">#&gt; 6         sum Nandukrishnan Haridas NHarida1  TRUE    TRUE FALSE FALSE FALSE</span></span>
+<span id="section-cb13-11"><a href="#section-cb13-11" tabindex="-1"></a><span class="co">#&gt;    data</span></span>
+<span id="section-cb13-12"><a href="#section-cb13-12" tabindex="-1"></a><span class="co">#&gt; 1  TRUE</span></span>
+<span id="section-cb13-13"><a href="#section-cb13-13" tabindex="-1"></a><span class="co">#&gt; 2  TRUE</span></span>
+<span id="section-cb13-14"><a href="#section-cb13-14" tabindex="-1"></a><span class="co">#&gt; 3 FALSE</span></span>
+<span id="section-cb13-15"><a href="#section-cb13-15" tabindex="-1"></a><span class="co">#&gt; 4 FALSE</span></span>
+<span id="section-cb13-16"><a href="#section-cb13-16" tabindex="-1"></a><span class="co">#&gt; 5 FALSE</span></span>
+<span id="section-cb13-17"><a href="#section-cb13-17" tabindex="-1"></a><span class="co">#&gt; 6 FALSE</span></span></code></pre></div>
+<ul>
+<li><strong>get_accesslist()</strong> - Takes pin_board, pin_name,
+datemin and datemax as arguments and returns access list at a given date
+or in a specific time period.</li>
+</ul>
+<div class="sourceCode" id="section-cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb14-1"><a href="#section-cb14-1" tabindex="-1"></a><span class="fu">get_accesslist</span>(pin_board, <span class="st">&quot;demo&quot;</span>, <span class="at">datemin =</span> <span class="st">&quot;2023-06-29&quot;</span>)</span>
+<span id="section-cb14-2"><a href="#section-cb14-2" tabindex="-1"></a><span class="co">#&gt; $`2023-06-29 08:44:20`</span></span>
+<span id="section-cb14-3"><a href="#section-cb14-3" tabindex="-1"></a><span class="co">#&gt;   AccessPanel              UserName   UserID  plot summary  view ADMIN   sum</span></span>
+<span id="section-cb14-4"><a href="#section-cb14-4" tabindex="-1"></a><span class="co">#&gt; 1       ADMIN Nandukrishnan Haridas NHarida1 FALSE   FALSE FALSE  TRUE  TRUE</span></span>
+<span id="section-cb14-5"><a href="#section-cb14-5" tabindex="-1"></a><span class="co">#&gt; 2       ADMIN         Peyman Eshghi  PEshghi FALSE   FALSE FALSE  TRUE  TRUE</span></span>
+<span id="section-cb14-6"><a href="#section-cb14-6" tabindex="-1"></a><span class="co">#&gt; 3        data Nandukrishnan Haridas NHarida1  TRUE   FALSE FALSE FALSE FALSE</span></span>
+<span id="section-cb14-7"><a href="#section-cb14-7" tabindex="-1"></a><span class="co">#&gt; 4        data         Peyman Eshghi  PEshghi  TRUE   FALSE FALSE FALSE FALSE</span></span>
+<span id="section-cb14-8"><a href="#section-cb14-8" tabindex="-1"></a><span class="co">#&gt; 5         sum         Peyman Eshghi  PEshghi  TRUE    TRUE FALSE FALSE FALSE</span></span>
+<span id="section-cb14-9"><a href="#section-cb14-9" tabindex="-1"></a><span class="co">#&gt; 6         sum Nandukrishnan Haridas NHarida1  TRUE    TRUE FALSE FALSE FALSE</span></span>
+<span id="section-cb14-10"><a href="#section-cb14-10" tabindex="-1"></a><span class="co">#&gt;    data</span></span>
+<span id="section-cb14-11"><a href="#section-cb14-11" tabindex="-1"></a><span class="co">#&gt; 1  TRUE</span></span>
+<span id="section-cb14-12"><a href="#section-cb14-12" tabindex="-1"></a><span class="co">#&gt; 2  TRUE</span></span>
+<span id="section-cb14-13"><a href="#section-cb14-13" tabindex="-1"></a><span class="co">#&gt; 3 FALSE</span></span>
+<span id="section-cb14-14"><a href="#section-cb14-14" tabindex="-1"></a><span class="co">#&gt; 4 FALSE</span></span>
+<span id="section-cb14-15"><a href="#section-cb14-15" tabindex="-1"></a><span class="co">#&gt; 5 FALSE</span></span>
+<span id="section-cb14-16"><a href="#section-cb14-16" tabindex="-1"></a><span class="co">#&gt; 6 FALSE</span></span></code></pre></div>
+<ul>
+<li><strong>get_admins()</strong> - Takes pin_board, pin_name and
+admin_panel as arguments and returns the list of admins.</li>
+</ul>
+<div class="sourceCode" id="section-cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb15-1"><a href="#section-cb15-1" tabindex="-1"></a><span class="fu">get_admins</span>(pin_board, <span class="st">&quot;demo&quot;</span>, <span class="st">&quot;ADMIN&quot;</span>)</span>
+<span id="section-cb15-2"><a href="#section-cb15-2" tabindex="-1"></a><span class="co">#&gt; NHarida1 - Nandukrishnan Haridas          PEshghi - Peyman Eshghi </span></span>
+<span id="section-cb15-3"><a href="#section-cb15-3" tabindex="-1"></a><span class="co">#&gt;                       &quot;NHarida1&quot;                        &quot;PEshghi&quot;</span></span></code></pre></div>
+<ul>
+<li><strong>get_board()</strong> - Takes pin_board and pin_name as
+arguments and gather all pin_board elements.</li>
+</ul>
+<div class="sourceCode" id="section-cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb16-1"><a href="#section-cb16-1" tabindex="-1"></a><span class="fu">get_board</span>(pin_board, <span class="st">&quot;demo&quot;</span>)</span>
+<span id="section-cb16-2"><a href="#section-cb16-2" tabindex="-1"></a><span class="co">#&gt; $access_panels</span></span>
+<span id="section-cb16-3"><a href="#section-cb16-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;ADMIN&quot; &quot;data&quot;  &quot;sum&quot;  </span></span>
+<span id="section-cb16-4"><a href="#section-cb16-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="section-cb16-5"><a href="#section-cb16-5" tabindex="-1"></a><span class="co">#&gt; $access_units</span></span>
+<span id="section-cb16-6"><a href="#section-cb16-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;plot&quot;    &quot;summary&quot; &quot;view&quot;   </span></span>
+<span id="section-cb16-7"><a href="#section-cb16-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="section-cb16-8"><a href="#section-cb16-8" tabindex="-1"></a><span class="co">#&gt; $access_df</span></span>
+<span id="section-cb16-9"><a href="#section-cb16-9" tabindex="-1"></a><span class="co">#&gt;   AccessPanel              UserName   UserID  plot summary  view ADMIN   sum</span></span>
+<span id="section-cb16-10"><a href="#section-cb16-10" tabindex="-1"></a><span class="co">#&gt; 1       ADMIN Nandukrishnan Haridas NHarida1 FALSE   FALSE FALSE  TRUE  TRUE</span></span>
+<span id="section-cb16-11"><a href="#section-cb16-11" tabindex="-1"></a><span class="co">#&gt; 2       ADMIN         Peyman Eshghi  PEshghi FALSE   FALSE FALSE  TRUE  TRUE</span></span>
+<span id="section-cb16-12"><a href="#section-cb16-12" tabindex="-1"></a><span class="co">#&gt; 3        data Nandukrishnan Haridas NHarida1  TRUE   FALSE FALSE FALSE FALSE</span></span>
+<span id="section-cb16-13"><a href="#section-cb16-13" tabindex="-1"></a><span class="co">#&gt; 4        data         Peyman Eshghi  PEshghi  TRUE   FALSE FALSE FALSE FALSE</span></span>
+<span id="section-cb16-14"><a href="#section-cb16-14" tabindex="-1"></a><span class="co">#&gt; 5         sum         Peyman Eshghi  PEshghi  TRUE    TRUE FALSE FALSE FALSE</span></span>
+<span id="section-cb16-15"><a href="#section-cb16-15" tabindex="-1"></a><span class="co">#&gt; 6         sum Nandukrishnan Haridas NHarida1  TRUE    TRUE FALSE FALSE FALSE</span></span>
+<span id="section-cb16-16"><a href="#section-cb16-16" tabindex="-1"></a><span class="co">#&gt;    data</span></span>
+<span id="section-cb16-17"><a href="#section-cb16-17" tabindex="-1"></a><span class="co">#&gt; 1  TRUE</span></span>
+<span id="section-cb16-18"><a href="#section-cb16-18" tabindex="-1"></a><span class="co">#&gt; 2  TRUE</span></span>
+<span id="section-cb16-19"><a href="#section-cb16-19" tabindex="-1"></a><span class="co">#&gt; 3 FALSE</span></span>
+<span id="section-cb16-20"><a href="#section-cb16-20" tabindex="-1"></a><span class="co">#&gt; 4 FALSE</span></span>
+<span id="section-cb16-21"><a href="#section-cb16-21" tabindex="-1"></a><span class="co">#&gt; 5 FALSE</span></span>
+<span id="section-cb16-22"><a href="#section-cb16-22" tabindex="-1"></a><span class="co">#&gt; 6 FALSE</span></span>
+<span id="section-cb16-23"><a href="#section-cb16-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="section-cb16-24"><a href="#section-cb16-24" tabindex="-1"></a><span class="co">#&gt; $access_list</span></span>
+<span id="section-cb16-25"><a href="#section-cb16-25" tabindex="-1"></a><span class="co">#&gt; list()</span></span></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
