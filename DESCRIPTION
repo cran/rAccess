@@ -1,6 +1,6 @@
 Package: rAccess
 Title: Access Control Module for 'shiny' Applications
-Version: 0.1.1.2
+Version: 0.1.1.3
 Authors@R: 
     c(person(given = "Peyman",
            family = "Eshghi",
@@ -40,7 +40,7 @@ URL: https://johnsonandjohnson.github.io/rAccess/,
         https://github.com/johnsonandjohnson/rAccess/
 BugReports: https://github.com/johnsonandjohnson/rAccess/issues/
 NeedsCompilation: no
-Packaged: 2025-10-29 22:40:13 UTC; peshghi
+Packaged: 2025-11-05 19:57:11 UTC; peshghi
 Author: Peyman Eshghi [aut, cre] (ORCID:
     <https://orcid.org/0000-0003-1613-2705>),
   Nandu Krishnan [aut],
@@ -49,4 +49,4 @@ Author: Peyman Eshghi [aut, cre] (ORCID:
   Johnson & Johnson Innovative Medicine [cph, fnd]
 Maintainer: Peyman Eshghi <peymaan.es@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-11-03 18:50:02 UTC
+Date/Publication: 2025-11-05 23:30:02 UTC

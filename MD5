@@ -1,9 +1,10 @@
-da9c88b5adea07d2d17d8656e017adb7 *DESCRIPTION
+bd5b336e8955a9eb7ea3cb6182eefbbd *DESCRIPTION
 79a8fdeba4db7eea6a0a4ed321730c9a *NAMESPACE
-1ccb94871b164c05582d4d7103611335 *R/functions.R
+70ac7da70d640a100cc082c50ab50785 *NEWS.md
+bcd646b165ff7276aabf463ea4816aa0 *R/functions.R
 8c074d5ca99fd4c29ec2dd84610c4399 *R/module_iam.R
-873ee70ae0381dc5e7f2d26fc53fa27b *R/module_sub_iam.R
-a4782065d15d36d6ce7635b9048e5d41 *README.md
+58a5ccdf57e14762ddacd5a2e381205a *R/module_sub_iam.R
+1c8d5a10f1571d146e8ee9b8e9e75931 *README.md
 2716472273f5cfe0074bf55112d82c54 *build/vignette.rds
 4b2f2abf76467cca04a452874ab58248 *inst/config/rAccess.yml
 8a4570c66c5c9347fb077ce87bc94541 *inst/config/sample_rAccess.yml
@@ -18,6 +19,7 @@ f9c5f9c787f70a3cfaa71f3f6eeb2875 *inst/png/check-selected-icon-s.png
 bf65c51fef9f87ad366f0c39c15fa852 *inst/png/closesmall-icon.png
 302ab5b280b7e69f8e9fda9832dbcd8c *inst/png/refresh-icon.png
 aa10f7c6a08e92c8b3f70bf6ae9d5bbd *man/figures/raccess.png
+c6c57b134cc258040dd04c912015f602 *man/figures/readme_rAccess.gif
 0a2a5f0f3413952a986c4c037d8e0beb *man/get_accesshistory.Rd
 0a98a2d9def3c595082796fb9acb92a8 *man/get_accesslist.Rd
 5ba466d63ba0ad96ec93d7cddc9b4ca6 *man/get_admins.Rd
